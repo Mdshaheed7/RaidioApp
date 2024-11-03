@@ -22,4 +22,25 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+<<<<<<< HEAD
 >>>>>>> c10d60c (Initial commit from Create Next App)
+=======
+@keyframes scrolling-text {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.scrolling-container {
+  overflow: hidden; /* Hide overflow */
+  white-space: nowrap; /* Prevent line breaks */
+}
+
+.scrolling-text {
+  display: inline-block;
+  animation: scrolling-text 5s linear infinite; /* Adjust duration as needed */
+}
+>>>>>>> d1b7c5d (Your commit message here)
