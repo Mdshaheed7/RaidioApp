@@ -15,7 +15,6 @@ const RadioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(80);
   const [isMuted, setIsMuted] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
   const [currentTrack, setCurrentTrack] = useState('Unknown Track');
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const hlsRef = useRef<Hls | null>(null);
@@ -44,19 +43,26 @@ const RadioPlayer = () => {
         });
         hls.on(Hls.Events.ERROR, (event, data) => {
           if (data.fatal) {
-            switch (data.fatal) {
-              case Hls.ErrorTypes.NETWORK_ERROR:
-                console.error('A network error occurred:', data);
-                break;
-              case Hls.ErrorTypes.MEDIA_ERROR:
-                console.error('A media error occurred:', data);
-                break;
-              case Hls.ErrorTypes.OTHER_ERROR:
-                console.error('An unexpected error occurred:', data);
-                break;
-            }
+              // Explicitly check the fatal error type
+              switch (data.fatal) {
+                  case Hls.ErrorTypes.NETWORK_ERROR:
+                      console.error('A network error occurred:', data);
+                      // Handle network error, possibly retry
+                      break;
+                  case Hls.ErrorTypes.MEDIA_ERROR:
+                      console.error('A media error occurred:', data);
+                      // Handle media error
+                      break;
+                  case Hls.ErrorTypes.OTHER_ERROR:
+                      console.error('An unexpected error occurred:', data);
+                      // Handle other types of errors
+                      break;
+                  default:
+                      console.error('An unknown error occurred:', data);
+                      break;
+              }
           }
-        });
+      });
         hlsRef.current = hls;
       } else if (audioRef.current.canPlayType('application/vnd.apple.mpegurl')) {
         audioRef.current.src = streamUrl;
@@ -161,12 +167,12 @@ const RadioPlayer = () => {
             {isPlaying ? <Pause size={24} /> : <Play size={24} />}
           </button>
 
-          <button
+          {/* <button
             onClick={() => setIsLiked(!isLiked)}
             className={`p-4 rounded-full transition-colors ${isLiked ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-600'}`}
           >
             <Heart size={24} />
-          </button>
+          </button> */}
 
           <button
             onClick={handleShare}
@@ -191,7 +197,7 @@ const RadioPlayer = () => {
               step={1}
               onValueChange={handleVolumeChange}
               className="bg-gray-300"
-              thumbClassName="bg-white rounded-full border border-gray-400"
+              // thumbClassName="bg-white rounded-full border border-gray-400"
             />
           </div>
         </div>
