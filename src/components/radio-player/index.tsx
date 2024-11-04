@@ -139,7 +139,7 @@ const RadioPlayer = () => {
   return (
     <Card className="w-full max-w-2xl mx-auto bg-white shadow-lg">
       <CardHeader className="text-center">
-        <CardTitle className="text-3xl font-bold">My Radio Station</CardTitle>
+        <CardTitle className="text-3xl font-bold text-navy-600">ಜನಧ್ವನಿ 90.8</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="relative">
